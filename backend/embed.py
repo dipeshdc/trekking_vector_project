@@ -19,13 +19,34 @@ with open("TrekData.csv", newline='', encoding='utf-8') as csvfile:
 client = QdrantClient(url="http://qdrant:6333")
 encoder = SentenceTransformer("all-MiniLM-L6-v2")
 
-client.create_collection(
-    collection_name="trekking_data",
-    vectors_config=models.VectorParams(
-        size=encoder.get_sentence_embedding_dimension(),
-        distance=models.Distance.COSINE,
-    ),
-)
+
+for i in range(20):
+    try:
+        if i == 0:
+            print("Connecting to Qdrant and checking collections...")
+
+        existing = client.get_collections()
+        if "trekking_data" not in [col.name for col in existing.collections]:
+            print("Creating 'trekking_data' collection...")
+            client.create_collection(
+                collection_name="trekking_data",
+                vectors_config=models.VectorParams(
+                    size=encoder.get_sentence_embedding_dimension(),
+                    distance=models.Distance.COSINE,
+                ),
+            )
+            print("Collection created successfully.")
+        else:
+            print("'trekking_data' collection already exists.")
+        break
+    except Exception as e:
+        if i < 3 or i == 19:
+            print(f"Attempt {i+1}: Qdrant not ready yet. Retrying...")
+        time.sleep(2)
+else:
+    print("Failed to connect to Qdrant after multiple attempts.")
+    exit(1)
+
 
 client.upload_points(
     collection_name="trekking_data",
