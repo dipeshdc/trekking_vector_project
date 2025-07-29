@@ -8,7 +8,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://52.23.247.167:3000"], 
+    allow_origins=["http://<your-ip-eg-localhost>:3000"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -19,9 +19,9 @@ app.add_middleware(
 def read_root():
     return {"msg": "Welcome here!"}
 
-@app.get("/api/search", response_model=SearchResponse)
-def search(query: str = Query(...)):
+@app.get("/api/search")
+async def search(query: str = Query(...)):
     hits = searchFromKeyword(query)
     payloads = [hit.payload for hit in hits]
-    text_generated = generate_text(query, trekList)
+    text_generated = await generate_text(query, payloads)
     return {"result": text_generated}

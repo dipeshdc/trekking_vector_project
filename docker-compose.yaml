@@ -23,10 +23,11 @@ services:
       - "11434:11434"
     volumes:
       - ollama_storage:/root/.ollama
+      - ./entrypoint.sh:/entrypoint.sh
     networks:
       - app-network
     restart: unless-stopped
-    command: ["ollama", "run", "deepseek-r1:1.5b"]
+    entrypoint: ["/entrypoint.sh"]
 
   backend:
     build:
