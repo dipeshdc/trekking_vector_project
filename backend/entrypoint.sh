@@ -3,7 +3,7 @@ set -e
 
 echo "Waiting for Qdrant..."
 
-until curl -s http://localhost:6333/collections > /dev/null; do
+until curl -s http://qdrant:6333/collections > /dev/null; do
   sleep 1
 done
 

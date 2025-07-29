@@ -16,7 +16,7 @@ with open("TrekData.csv", newline='', encoding='utf-8') as csvfile:
             seen_treks.add(trek_name)
             documents.append(row)
 
-client = QdrantClient(url="http://localhost:6333")
+client = QdrantClient(url="http://qdrant:6333")
 encoder = SentenceTransformer("all-MiniLM-L6-v2")
 
 client.create_collection(
