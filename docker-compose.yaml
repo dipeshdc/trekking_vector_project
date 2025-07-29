@@ -16,6 +16,17 @@ services:
       - app-network
     restart: unless-stopped
 
+  llmservice:
+    image: ollama/ollama
+    container_name: llmservice
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_storage:/root/.ollama
+    networks:
+      - app-network
+    restart: unless-stopped
+
   backend:
     build:
       context: ./backend
@@ -27,6 +38,7 @@ services:
       - QDRANT_PORT=6333
     depends_on:
       - qdrant
+      - llmservice
     networks:
       - app-network
     restart: unless-stopped
@@ -45,3 +57,4 @@ services:
 
 volumes:
   qdrant_storage:
+  ollama_storage:
