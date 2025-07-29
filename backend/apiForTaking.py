@@ -2,7 +2,7 @@ from fastapi import FastAPI, Query
 from vectorSearch import searchFromKeyword
 from pydanticClass import SearchResponse
 from fastapi.middleware.cors import CORSMiddleware 
-from llmsResponse import generate_text
+from llmResponse import generate_text
 
 app = FastAPI()
 
