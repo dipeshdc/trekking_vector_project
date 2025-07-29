@@ -6,14 +6,14 @@ function App() {
   const [input, setInput] = useState("");
   const [treks, setTreks] = useState([]);
   const [error, setError] = useState(null);
-  const hasResults = treks.length > 0 || error;
+  const hasResults = treks?.payloads?.length > 0 || error;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setTreks([]);
     try {
-      const res = await axios.get("http://<your-ip-eg-localhost>:8000/api/search", {
+      const res = await axios.get("http://localhost:8000/api/search", {
         params: { query: input },
       });
       setTreks(res.data.result || []);
@@ -60,8 +60,12 @@ function App() {
       </div>
 
       {hasResults && (
+
         <div style={{ marginTop: "2rem" }}>
-          <TrekList treks={treks} />
+          {treks.llmText && (
+            <p style={{ fontStyle: "italic", marginBottom: "1rem" }}>{treks.llmText}</p>
+          )}
+          <TrekList treks={treks?.payloads} />
         </div>
       )}
     </div>

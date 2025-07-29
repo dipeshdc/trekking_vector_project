@@ -8,7 +8,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://<your-ip-eg-localhost>:3000"], 
+    allow_origins=["http://localhost:3000"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,4 +24,8 @@ async def search(query: str = Query(...)):
     hits = searchFromKeyword(query)
     payloads = [hit.payload for hit in hits]
     text_generated = await generate_text(query, payloads)
-    return {"result": text_generated}
+    result = {
+        "llmText": text_generated,
+        "payloads": payloads
+        }
+    return {"result": result}
