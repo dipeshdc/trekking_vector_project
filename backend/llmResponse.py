@@ -10,11 +10,13 @@ async def generate_text(query, trekList):
     json_str = json.dumps(trekList, indent=2)
     
     prompt = f"""
-    Generate a concise and informative summary (around 50 words) of the following trek data. The response should be clear, engaging, and not reference any user or query. Focus on key highlights and usefulness.
+    Summarize the trek data below in ~50 words. Be clear and informative. Don't mention the user. Answer according to query of user "{query}" taking inference from the below data.
 
-    Trek Information:
+    Data:
     {json_str}
     """
+
+
 
         
     payload = {

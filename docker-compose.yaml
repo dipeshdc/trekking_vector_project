@@ -27,7 +27,7 @@ services:
     networks:
       - app-network
     restart: unless-stopped
-    entrypoint: ["/entrypoint.sh"]
+    entrypoint: ["/bin/sh", "-c", "chmod +x /entrypoint.sh && exec /entrypoint.sh"]
 
   backend:
     build:

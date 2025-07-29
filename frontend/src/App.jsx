@@ -4,19 +4,20 @@ import TrekList from "./TrekList";
 
 function App() {
   const [input, setInput] = useState("");
-  const [treks, setTreks] = useState([]);
+  const [treks, setTreks] = useState(null);
   const [error, setError] = useState(null);
   const hasResults = treks?.payloads?.length > 0 || error;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    setTreks([]);
+    setTreks(null);
     try {
-      const res = await axios.get("http://localhost:8000/api/search", {
+      const res = await axios.get("http://localhost/api/search", {
         params: { query: input },
       });
-      setTreks(res.data.result || []);
+      console.log("API Response:", res.data.result);
+      setTreks(res.data.result || null);
     } catch (err) {
       setError("Failed to fetch data");
     }
@@ -62,8 +63,10 @@ function App() {
       {hasResults && (
 
         <div style={{ marginTop: "2rem" }}>
-          {treks.llmText && (
-            <p style={{ fontStyle: "italic", marginBottom: "1rem" }}>{treks.llmText}</p>
+          {treks?.llmText && (
+            <p style={{ fontStyle: "italic", marginBottom: "1rem" }}>
+              {treks?.llmText?.result}
+            </p>
           )}
           <TrekList treks={treks?.payloads} />
         </div>
