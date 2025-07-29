@@ -26,6 +26,7 @@ services:
     networks:
       - app-network
     restart: unless-stopped
+    command: ollama run deepseek-r1:1.5b
 
   backend:
     build:
