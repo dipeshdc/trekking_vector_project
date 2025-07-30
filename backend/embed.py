@@ -8,13 +8,8 @@ documents = []
 
 with open("TrekData.csv", newline='', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)
-    seen_treks = set()
     for row in reader:
-        row.pop("", None)
-        trek_name = row.get("Trek", "").strip()
-        if trek_name and trek_name not in seen_treks:
-            seen_treks.add(trek_name)
-            documents.append(row)
+        documents.append(row)
 
 client = QdrantClient(url="http://qdrant:6333")
 encoder = SentenceTransformer("all-MiniLM-L6-v2")
