@@ -13,7 +13,7 @@ function App() {
     setError(null);
     setTreks(null);
     try {
-      const res = await axios.get("http://localhost/api/search", {
+      const res = await axios.get("http://localhost:8000/api/search", {
         params: { query: input },
       });
       console.log("API Response:", res.data.result);
