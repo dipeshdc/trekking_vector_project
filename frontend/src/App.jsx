@@ -1,17 +1,20 @@
 import { useState } from "react";
 import axios from "axios";
 import TrekList from "./TrekList";
+import Spinner from "./Spinner"; 
 
 function App() {
   const [input, setInput] = useState("");
   const [treks, setTreks] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const hasResults = treks?.payloads?.length > 0 || error;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setTreks(null);
+    setLoading(true);
     try {
       const res = await axios.get("http://localhost:8000/api/search", {
         params: { query: input },
@@ -20,7 +23,9 @@ function App() {
       setTreks(res.data.result || null);
     } catch (err) {
       setError("Failed to fetch data");
-    }
+    } finally {
+      setLoading(false); // Stop loading
+  }
   };
 
   return (
@@ -60,7 +65,9 @@ function App() {
         {error && <p style={{ color: "red", marginTop: "1rem" }}>{error}</p>}
       </div>
 
-      {hasResults && (
+      {loading && <Spinner />}
+
+      {!loading && hasResults && (
 
         <div style={{ marginTop: "2rem" }}>
           {treks?.llmText && (

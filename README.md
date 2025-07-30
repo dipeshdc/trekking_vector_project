@@ -47,6 +47,7 @@ Recommended for mid-tier setups or remote hosting.
 ### Deployment Steps:
 
 1. Launch an EC2 instance with the above configuration.
+2. Open port 3000 and 8000
 2. SSH into the instance.
 3. Clone the repository:
    ```bash
