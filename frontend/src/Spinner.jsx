@@ -19,11 +19,11 @@ const styles = {
     border: "4px solid #ccc",
     borderTop: "4px solid #4CAF50",
     borderRadius: "50%",
-    animation: "spin 1s linear infinite",
+    animation: "spin 1s linear infinite"
   },
   text: {
     marginTop: "10px",
-    color: "#333",
+    color: "#FFF",
   },
 };
 

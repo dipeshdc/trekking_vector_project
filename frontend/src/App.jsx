@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import TrekList from "./TrekList";
 import Spinner from "./Spinner"; 
+import './App.css'
 
 function App() {
   const [input, setInput] = useState("");
